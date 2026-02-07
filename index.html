@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark26 | Valentine 2026</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .hidden-view { display: none !important; }
+        .red-gradient { background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%); }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .chat-container { height: calc(100vh - 200px); }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-red-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showView('landing')">
+                <span class="text-3xl">❤️</span>
+                <span class="text-2xl font-bold tracking-tighter">Spark<span class="text-red-600">26</span></span>
+            </div>
+            
+            <div id="nav-guest" class="flex gap-4">
+                <button onclick="showView('auth')" class="text-gray-600 font-semibold px-4 py-2 hover:text-red-600 transition">Login</button>
+                <button onclick="showView('auth')" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold shadow-lg shadow-red-200 hover:bg-red-700 transition">Join Now</button>
+            </div>
+
+            <div id="nav-user" class="hidden flex gap-6 items-center">
+                <button onclick="showView('matches')" class="font-medium hover:text-red-600 transition">Discover</button>
+                <button onclick="showView('chat')" class="font-medium hover:text-red-600 transition">Chats</button>
+                <button onclick="showView('admin')" class="text-xs text-gray-300 hover:text-red-600 transition">Admin</button>
+                <div class="w-10 h-10 rounded-full border-2 border-red-500 overflow-hidden bg-gray-100">
+                    <img id="user-avatar-nav" src="https://via.placeholder.com/100" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="view-landing" class="view-content red-gradient">
+        <div class="max-w-7xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-16">
+            <div class="md:w-1/2">
+                <span class="inline-block bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-bold uppercase mb-6 tracking-widest">Valentine 2026 Limited</span>
+                <h1 class="serif text-6xl md:text-8xl leading-none mb-8">Don't spend <br><span class="text-red-600 italic">V-Day</span> alone.</h1>
+                <p class="text-xl text-gray-500 mb-10 max-w-lg leading-relaxed">Join 2.6 million singles using our AI-Match engine to find a genuine connection before February 14th.</p>
+                <button onclick="showView('auth')" class="bg-red-600 text-white px-12 py-5 rounded-2xl text-xl font-bold shadow-2xl shadow-red-300 hover:scale-105 active:scale-95 transition-all">Get Started Free</button>
+            </div>
+            <div class="md:w-1/2 relative">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=1000" 
+                     class="rounded-[3rem] shadow-2xl border-[12px] border-white transform rotate-3 hover:rotate-0 transition duration-700">
+                <div class="absolute -bottom-10 -left-10 glass p-8 rounded-3xl shadow-xl hidden md:block border-red-100">
+                    <p class="text-3xl mb-1">🔥</p>
+                    <p class="font-bold text-xl">12k Active</p>
+                    <p class="text-gray-400 text-sm">Matches in your city</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-auth" class="view-content hidden-view py-20 px-6">
+        <div class="max-w-md mx-auto bg-white p-10 rounded-[3rem] shadow-2xl border border-red-50">
+            <h2 class="serif text-4xl mb-2 text-center">Join Spark26</h2>
+            <p class="text-center text-gray-400 mb-8 italic text-sm">Your 2026 Valentine is waiting...</p>
+            <div class="space-y-4">
+                <input type="email" id="email" placeholder="Email" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 ring-red-500 border border-transparent">
+                <input type="password" id="password" placeholder="Password" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 ring-red-500 border border-transparent">
+                <div class="py-2">
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Upload Profile Photo</label>
+                    <input type="file" id="profile-pic" class="text-sm file:bg-red-50 file:text-red-600 file:border-0 file:rounded-full file:px-4 file:py-2">
+                </div>
+                <button id="auth-btn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-red-700 transition active:scale-95">Create Profile</button>
+                <p id="auth-msg" class="text-center text-sm mt-4"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-matches" class="view-content hidden-view py-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="serif text-4xl mb-10 text-center">New Sparks for You</h2>
+            <div id="match-deck" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                </div>
+        </div>
+    </section>
+
+    <section id="view-chat" class="view-content hidden-view px-6 py-6">
+        <div class="max-w-5xl mx-auto glass rounded-[2.5rem] overflow-hidden flex chat-container border border-red-50">
+            <div class="w-1/3 border-r border-red-50 hidden md:flex flex-col bg-white/50">
+                <div class="p-6 font-bold text-xl border-b border-red-50">Messages</div>
+                <div id="chat-sidebar" class="flex-1 overflow-y-auto">
+                    </div>
+            </div>
+            <div class="flex-1 flex flex-col bg-white/30">
+                <div id="chat-header" class="p-6 border-b border-red-50 font-bold text-lg flex items-center gap-3">
+                    <div id="chat-target-img" class="w-10 h-10 rounded-full bg-gray-200"></div>
+                    <span id="chat-target-name">Select a Match</span>
+                </div>
+                <div id="chat-window" class="flex-1 p-6 overflow-y-auto space-y-4">
+                    </div>
+                <div class="p-4 bg-white flex gap-3">
+                    <input type="text" id="msg-input" placeholder="Type a message..." class="flex-1 bg-gray-100 rounded-2xl px-6 outline-none">
+                    <button id="send-btn" class="bg-red-600 text-white p-4 rounded-2xl hover:bg-red-700 transition">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-admin" class="view-content hidden-view py-20 px-6">
+        <div class="max-w-4xl mx-auto bg-gray-900 text-white p-10 rounded-3xl">
+            <h2 class="serif text-3xl mb-6">Admin Panel</h2>
+            <div class="grid grid-cols-3 gap-6 mb-10">
+                <div class="bg-gray-800 p-6 rounded-2xl">
+                    <p class="text-gray-400 text-sm">Total Users</p>
+                    <p class="text-3xl font-bold">14,202</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-2xl">
+                    <p class="text-gray-400 text-sm">V-Day RSVPs</p>
+                    <p class="text-3xl font-bold text-red-500">8,441</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-2xl">
+                    <p class="text-gray-400 text-sm">Reports</p>
+                    <p class="text-3xl font-bold">0</p>
+                </div>
+            </div>
+            <button onclick="showView('landing')" class="text-red-500 underline">Exit Admin Mode</button>
+        </div>
+    </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getDatabase, ref, set, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // CONFIG (Using your provided Project ID)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDe6_I0_pb967TMuCZyIQDLcO5RDoZtwE8",
+            authDomain: "amorly-2c4b0.firebaseapp.com",
+            projectId: "amorly-2c4b0",
+            databaseURL: "https://amorly-2c4b0-default-rtdb.firebaseio.com", // Adjust to your actual DB URL
+            storageBucket: "amorly-2c4b0.appspot.com",
+            messagingSenderId: "42012777855",
+            appId: "1:42012777855:web:8493393c820b431fc04e4a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // VIEW CONTROLLER
+        window.showView = (id) => {
+            document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden-view'));
+            document.getElementById('view-' + id).classList.remove('hidden-view');
+            window.scrollTo(0,0);
+        };
+
+        // AUTHENTICATION
+        document.getElementById('auth-btn').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const msg = document.getElementById('auth-msg');
+
+            try {
+                // Try Login, if fails, create account
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (err) {
+                try {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } catch (e) {
+                    msg.innerText = e.message;
+                    msg.classList.add('text-red-500');
+                }
+            }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('nav-guest').classList.add('hidden');
+                document.getElementById('nav-user').classList.remove('hidden');
+                document.getElementById('user-avatar-nav').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`;
+                loadProfiles();
+                showView('matches');
+            } else {
+                document.getElementById('nav-guest').classList.remove('hidden');
+                document.getElementById('nav-user').classList.add('hidden');
+                showView('landing');
+            }
+        });
+
+        // PROFILES LOAD
+        function loadProfiles() {
+            const deck = document.getElementById('match-deck');
+            const mocks = [
+                {id: '1', name: 'Elena', age: 24, img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400'},
+                {id: '2', name: 'Marcus', age: 27, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400'},
+                {id: '3', name: 'Sofia', age: 22, img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400'},
+                {id: '4', name: 'Julian', age: 29, img: 'https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=400'}
+            ];
+
+            deck.innerHTML = mocks.map(p => `
+                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-red-100 transition duration-500 group">
+                    <div class="h-80 relative overflow-hidden">
+                        <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <h3 class="text-2xl font-bold">${p.name}, ${p.age}</h3>
+                            <p class="text-sm opacity-70 italic">Online now</p>
+                        </div>
+                    </div>
+                    <div class="p-6 flex justify-around">
+                        <button class="w-14 h-14 rounded-full border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition">❌</button>
+                        <button onclick="startChat('${p.name}', '${p.img}')" class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 active:scale-95 transition">❤️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // CHAT LOGIC
+        window.startChat = (name, img) => {
+            showView('chat');
+            document.getElementById('chat-target-name').innerText = name;
+            document.getElementById('chat-target-img').innerHTML = `<img src="${img}" class="w-full h-full rounded-full object-cover">`;
+            
+            // Real-time Chat Listener
+            const chatRef = ref(db, 'chats/global');
+            onValue(chatRef, (snapshot) => {
+                const data = snapshot.val();
+                const window = document.getElementById('chat-window');
+                window.innerHTML = '';
+                if(data) {
+                    Object.values(data).forEach(msg => {
+                        const isMe = msg.user === auth.currentUser.email;
+                        window.innerHTML += `
+                            <div class="flex ${isMe ? 'justify-end' : 'justify-start'}">
+                                <div class="${isMe ? 'bg-red-600 text-white rounded-tr-none' : 'bg-white border border-red-50 text-gray-800 rounded-tl-none'} p-4 rounded-2xl shadow-sm max-w-xs">
+                                    <p class="text-sm">${msg.text}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    window.scrollTop = window.scrollHeight;
+                }
+            });
+        };
+
+        document.getElementById('send-btn').onclick = () => {
+            const input = document.getElementById('msg-input');
+            if(!input.value) return;
+            
+            push(ref(db, 'chats/global'), {
+                user: auth.currentUser.email,
+                text: input.value,
+                timestamp: serverTimestamp()
+            });
+            input.value = '';
+        };
+
+    </script>
+</body>
+</html>
